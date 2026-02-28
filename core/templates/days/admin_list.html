@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+{% block title %} Приемы пищи {% endblock %}
+{% block body %}
+<div class="container p-0 m-0">
+    <div class="card mb-2 shadow-sm w-100">
+        <div class="card-body d-flex gap-2 p-2">
+            <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'admin-dashboard' %}"><b>Блюда</b></a>
+            <a type="button" class="btn btn-primary flex-fill" href=""><b>Дни</b></a>
+            <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'ingredients-all' %}"><b>Продукты</b></a>
+            <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'purchase-view' %}"><b>Закупки</b></a>
+        </div>
+    </div>
+    <div class="card p-2 mb-2">
+        <div class="container p-0 d-flex justify-items-between gap-2">
+            <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'admin-day' prev_day_link %}"><</a>
+            <div class="card p-2 w-50">
+                {{day.date}}
+            </div>
+            <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'admin-day' next_day_link %}">></a>
+        </div>
+    </div>
+    {% if breakfast %}
+    <div class="card mb-2">
+        <div class="card-header d-flex justify-content-between">
+            Завтрак
+            <div>
+                <span class="badge text-bg-primary p-2">Учеников: {{user_paid_breakfast}}</span>
+            </div>
+        </div>
+        <div class="card-body">
+        {% for meal in breakfast.items.all %}
+            {{meal.title}}<br>
+        {% endfor %}
+        </div>
+        <div class="card-footer">
+            {% if not breakfast.is_prepared %}
+                <a class="btn btn-outline-primary w-100" href="{% url 'meal-prepare' breakfast.pk %}">Приготовить завтрак</a>
+            {% else %}
+                <span class="badge text-bg-success w-100 p-3">Завтрак приготовлен</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% if dinner %}
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            Обед
+            <div>
+                <span class="badge text-bg-primary p-2">Учеников: {{user_paid_dinner}}</span>
+            </div>
+        </div>
+        <div class="card-body">
+        {% for meal in dinner.items.all %}
+            {{meal.title}}<br>
+        {% endfor %}
+        </div>
+        <div class="card-footer">
+            {% if not dinner.is_prepared %}
+                <a class="btn btn-outline-primary w-100" href="{% url 'meal-prepare' dinner.pk %}">Приготовить обед</a>
+            {% else %}
+                <span class="badge text-bg-success w-100 p-3">Обед приготовлен</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if not breakfast%}
+    <a class="btn btn-outline-primary d-flex w-100 justify-content-center mb-2" href="{% url 'meals-create' day.pk 'BF' %}"> Добавить завтрак</a>
+    {% endif %}
+    {% if not dinner%}
+    <a class="btn btn-outline-primary d-flex w-100 justify-content-center" href="{% url 'meals-create' day.pk 'DN' %}"> Добавить обед</a>
+    {% endif %}
+    
+</div>
+{% endblock %}

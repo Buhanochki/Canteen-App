@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% block title %} Отзывы {% endblock %}
+{% block body %}
+<div class="container p-0 m-0">
+    <div class="card mb-2 shadow-sm w-100">
+        <div class="card-header d-flex justify-content-between">
+            Обед <span class="badge text-bg-primary p-2">{{meal.cost}} ₽ </span>
+        </div>
+        <div class="card-body">
+        {% for item in meal.items.all %}
+            {{item.title}}<br>
+        {% endfor %}
+        </div>
+    </div> 
+
+    {% if not reviews %}
+        <div class="card p-2 mb-2 d-flex text-center text-dark">
+            Пока нет отзывов
+        </div>
+    {% endif %}
+
+    <a type="button" class="btn btn-outline-primary w-100 mb-2" href="{% url 'review-create' meal.pk %}"> Добавить отзыв</a>
+
+    {% for review in reviews %}
+        <div class="card mb-2">
+            <div class="card-header d-flex justify-content-between">
+                {{review.user}}
+                <div>
+                <span class="badge text-bg-{% if review.rate == 'PS' %}success {% elif review.rate == 'NT' %}warning {% else %}danger{% endif%} p-2">
+                    {% if review.rate == 'PS' %}Позитивное {% elif review.rate == 'NT' %}Нейтральное {% else %}Негативное {% endif%}впечатление
+                </span>
+                <a href="{% url 'review-delete' review.pk %}"><span class="badge text-bg-danger p-2 ms-1">X</span></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {{review.text}}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

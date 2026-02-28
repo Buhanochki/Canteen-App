@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% block title %} Создать прием пищи {% endblock %}
+{% block body %}
+<div class="container p-0 m-0">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-2">
+        {{form.items}}
+        </div>
+        {{form.cost}}
+        <button class="btn btn-primary col-12 mt-2">Создать</button>
+    </form>
+    
+</div>
+{% endblock %}

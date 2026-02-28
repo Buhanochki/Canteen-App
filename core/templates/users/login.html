@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% block title %} {{title}} {% endblock %}
+{% block body %}
+<div class="card col-md-6 shadow-sm">
+    <div class="card-header bg-white m-3">
+        <h2 class="text-center">Авторизация</h2>
+    </div>
+    <div class="card-body">
+        <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+            <div class="input-group mb-2">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                {{form.username}}
+            </div>
+            {% for error in form.username.errors %}
+            <div class="text-danger small mb-2">
+                {{ error }}
+            </div>
+            {% endfor %}
+            <div class="input-group mb-2">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-key"></i></span>
+                {{form.password}}
+            </div>
+            {% for error in form.password.errors %}
+            <div class="text-danger small mb-2">
+                {{ error }}
+            </div>
+            {% endfor %}
+            {% if user_not_found %}
+            <div class="card border-danger text-center text-danger">
+                Неверное сочетание почты и пароля!
+            </div>
+            {% endif %}
+            <a href="#" class="text-decoration-none">Восстановить пароль</a>
+            <button class="btn btn-primary col-12 mt-2">Войти</button>
+        </form>
+    </div>
+    <div class="card-footer m-3 mb-0 p-3 bg-white text-center">
+        Ещё нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь!</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% block title %} Создать ингредиент {% endblock %}
+{% block body %}
+<div class="card">
+    <form method="post">
+        <div class="d-grid gap-2 p-2">
+        <h5>Добавление ингредиента</h5>
+        {% csrf_token %}
+        {{form.title}}
+        <button class="btn btn-primary col-12 mt-2">Создать</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

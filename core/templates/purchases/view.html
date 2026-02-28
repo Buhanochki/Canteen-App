@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% block title %} Закупки {% endblock %}
+{% block body %}
+<div class="conatiner d-grid w-100 p-0 m-0">
+<div class="card mb-2 shadow-sm w-100">
+    <div class="card-body d-flex gap-2 p-2">
+        <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'admin-dashboard' %}"><b>Блюда</b></a>
+        <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'admin-day' date %}"><b>Дни</b></a>
+        <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'ingredients-all' %}"><b>Продукты</b></a>
+        <a type="button" class="btn btn-primary flex-fill" href="{% url 'purchase-view' %}"><b>Закупки</b></a>
+    </div>
+</div>
+<div class="d-grid gap-2">
+{% for purchase in purchases %}
+    <div class="card">
+        <div class="card-body d-flex justify-content-between">
+            <div>{{purchase.ingredient}}</div>
+            <div>{{purchase.amount}}</div>
+            <span class="badge text-bg-{% if purchase.is_approved == True %}success {% else %}danger {% endif %} p-2">{% if purchase.is_approved == True %}Принята {% else %}Ожидает {% endif %}</span>
+        </div>
+    </div>
+{% endfor %}
+<a href = "{% url 'purchase-create' %}" class="text-decorations-none">
+    <div class="card w-100">
+        <div class="card-body d-flex align-items-center justify-content-center">
+            <i class="bi bi-plus-circle"></i>
+        </div>
+    </div>
+</a>
+</div>
+{% endblock %}

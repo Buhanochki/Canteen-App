@@ -1,0 +1,38 @@
+name: Backend Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Check Application
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set Up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.11
+
+    - name: Install Dependencies
+      run: |
+        pip install --upgrade pip
+        pip install poetry
+        poetry config virtualenvs.create false
+        poetry install --no-root
+
+    - name: Show Pip List
+      run: pip list
+
+    - name: Run isort
+      run: isort .
+
+    - name: Run black
+      run: black .
+
+    - name: Run flake8
+      run: pflake8 .

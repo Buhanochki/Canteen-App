@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% block title %} Ингредиенты {% endblock %}
+{% block body %}
+    <div class="container d-grid p-0 m-0">
+        <div class="card mb-2 shadow-sm w-100">
+            <div class="card-body d-flex gap-2 p-2">
+                
+                <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'admin-dashboard' %}"><b>Блюда</b></a>
+                <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'admin-day' date %}"><b>Дни</b></a>
+                <a type="button" class="btn btn-primary flex-fill" href="{% url 'ingredients-all' %}"><b>Продукты</b></a>
+                <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'purchase-view' %}"><b>Закупки</b></a>
+            </div>
+        </div>
+        {% for ingredient in ingredients %}
+            <div class="card mb-2">
+                <div class="card-body d-flex justify-content-between">
+                    {{ingredient.title}} 
+                    <span class="badge text-bg-primary p-2">Количество: {{ingredient.amount}}</span>
+                </div>
+            </div>
+        {% endfor %}
+        <a href="{% url 'ingredients-create' %}" class="btn btn-outline-primary"> Добавить новый ингредиент</a>
+
+    </div>
+{% endblock %}

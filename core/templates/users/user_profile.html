@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+{% block title %} Профиль {% endblock %}
+
+{% load static %}
+{% block body %}
+<div class="card m-2">
+    <div class="d-flex">
+        <div>
+            <img src="{% static 'images/photo_2025-01-09_20-47-57.jpg' %}" width="950"class="img-fluid rounded-start border-end" alt="...">
+        </div>
+        <div class="col-md-9">
+            <div class="card-header bg-white d-flex justify-content-between">
+                <h5><b>Профиль</b></h5>
+                <a href="{% url 'update_profile' %}"><span class="badge text-bg-primary p-2 d-flex align-items-center"><i class="bi bi-pencil"></i></span></a>
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <div class="form-control text-truncate">{{ user.last_name }} {{ user.first_name }} {{ user.surname }}</div>
+                </div>
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <div class="form-control text-truncate">{{ user.email }}</div>
+                </div>
+                {% if user.status == "PT" %}
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-person-bounding-box"></i></span>
+                    <div class="form-control text-truncate">Ученик</div>
+                </div>
+                {% elif user.status == "TC" %}
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-person-bounding-box"></i></span>
+                    <div class="form-control text-truncate">Повар</div>
+                </div>
+                {% else %}
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-person-bounding-box"></i></span>
+                    <div class="form-control text-truncate">Админ</div>
+                </div>
+                {% endif %}
+                Аллергии
+                {% for item in user.allergies.all %}
+                    <div class="card mb-2">
+                        <div class="card-body p-1">
+                            {{item.title}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% block title %}Редактировать {{ item.title }}{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Основная информация</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Название</label>
+                            <input type="text" class="form-control" name="title" value="{{ item.title }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Описание</label>
+                            <textarea class="form-control" name="description" rows="3">{{ item.description }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Ингредиенты</h5>
+                    </div>
+                    <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                        {% for ingredient in ingredients %}
+                        <div class="border rounded p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">{{ ingredient.title }}</h6>
+                                <div class="form-check">
+                                    <input type="checkbox" 
+                                           class="form-check-input" 
+                                           name="use_{{ ingredient.id }}"
+                                           id="use_{{ ingredient.id }}"
+                                           {% if ingredient.selected %}checked{% endif %}>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-2">
+                                <small class="text-muted">
+                                    В наличии: {{ ingredient.amount }}
+                                </small>
+                            </div>
+                            
+                            <div class="mb-2">
+                                <label class="small">Количество:</label>
+                                <input type="number" 
+                                       class="form-control form-control-sm" 
+                                       name="amount_{{ ingredient.id }}"
+                                       min="0" 
+                                       max="10000"
+                                       value="{{ ingredient.selected_amount }}">
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

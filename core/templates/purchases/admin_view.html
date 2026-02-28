@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% block title %} Закупки {% endblock %}
+{% block body %}
+<div class="conatiner d-grid w-100 p-0 m-0">
+<div class="card mb-2 shadow-sm w-100">
+    <div class="card-body d-flex gap-2 p-2">
+        <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'report-meal' date %}"><b>Отчеты</b></a>
+            <a type="button" class="btn btn-primary flex-fill" href=""><b>Закупки</b></a>
+    </div>
+</div>
+<div class="d-grid gap-2">
+{% for purchase in purchases %}
+    <div class="card">
+        <div class="card-body d-flex justify-content-between">
+            <div>{{purchase.author}}</div>
+            <div>{{purchase.ingredient}}</div>
+            <div>{{purchase.amount}}</div>
+            {% if purchase.is_approved == False %}
+                <a href="{% url 'purchase-approve' purchase.pk %}" class="btn btn-outline-success">Принять</a>
+            {% else %}
+                <div class="card text-bg-success p-1">Принято</div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+{% if not purchases %}
+<div class="card">
+    <div class="card-body d-flex justify-content-center">
+        Пока нет закупок
+    </div>
+</div>
+{% endif %}
+
+</div>
+{% endblock %}

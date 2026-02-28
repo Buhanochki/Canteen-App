@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+{% block title %}Регистрация{% endblock %}
+{% block body %}
+<div class="card p-4 shadow-sm col-md-6">
+    <div class="card-header bg-white mb-4 p-0 ">
+        <h2 class="text-center m-2">Регистрация</h2>
+    </div>
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            {{ form.last_name }}{{ form.first_name }}{{ form.surname }}
+        </div>
+        {% for error in form.last_name.errors %}
+        <div class="text-danger small mb-2">
+            {{ error }}
+        </div>
+        {% endfor %}
+        {% for error in form.first_name.errors %}
+        <div class="text-danger small mb-2">
+            {{ error }}
+        </div>
+        {% endfor %}
+        {% for error in form.surname.errors %}
+        <div class="text-danger small mb-2">
+            {{ error }}
+        </div>
+        {% endfor %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+            {{ form.email }}
+        </div>
+        {% for error in form.email.errors %}
+                    <div class="text-danger small mb-2">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-bounding-box"></i></span>
+            {{ form.status }}
+        </div>
+        {% for error in form.status.errors %}
+        <div class="text-danger small mb-2">
+            {{ error }}
+        </div>
+        {% endfor %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="bi bi-key"></i></span>
+            {{ form.password1 }}
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
+            {{ form.password2 }}
+        </div>
+        {% for error in form.password1.errors %}
+        <div class="text-danger small mb-2">
+            {{ error }}
+        </div>
+        {% endfor %}
+        {% for error in form.password2.errors %}
+        <div class="text-danger small mb-2">
+            {{ error }}
+        </div>
+        {% endfor %}
+        <div>
+            <a href="#">Восстановить пароль</a>
+        </div>
+        <button class="btn btn-primary col-12 mt-2">Создать</button>
+        <div class="card-footer bg-white mt-4 mb-0 text-center">
+            Уже есть аккаунт? <a href="{% url 'login' %}">Войдите!</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

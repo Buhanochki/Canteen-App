@@ -1,0 +1,26 @@
+{% load static %}
+<div class="card shadow-sm">
+    <div class="container d-flex align-items-center justify-content-between p-0 m-0">
+        <div class="d-flex align-items-center m-2">
+            <a href="{% url 'main-page' %}" style="text-decoration:none;">
+                <div class="ms-3">
+                <h2><b>
+                    Столовая <br>и точка
+                </b></h2>
+                </div>
+        </a>
+            
+        </div>
+        {% if request.user.is_anonymous %}
+        <div class="d-grid gap-2 m-3">
+            <a href="{% url 'register' %}"><button type="button" class="btn btn-primary"><b>Зарегистрироваться</b></button></a>
+            <a href="{% url 'login' %}" type="button" class="btn btn-primary "><b>Войти</b></a> 
+        </div>
+        {% else %}
+        <div class="d-grid gap-2 m-3">
+            <a href="{% url 'user-profile' %}"><button type="button" class="btn btn-primary "><b> Профиль</b></button></a>
+            <a href="{% url 'logout' %}" type="button" class="btn btn-danger "><b>Выйти</b></a> 
+        </div>
+        {% endif %}
+    </div>  
+</div>
